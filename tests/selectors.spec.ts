@@ -20,5 +20,17 @@ test.describe('Selectors practice', () => {
         //Now we verify that the URL contains the #get-started fragment
         await expect(page).toHaveURL(/.*#get-started/);
     })
+
+    //Practicing with Text selectors
+    test('Verify Heading Text usin Text Selector', async ({ page }) => {
+        await page.goto('https://practice.sdetunicorns.com/');
+        //We locate the heading using a text selector
+        //Note when using text it must be unique on the page to be accurate
+        const heading = await page.locator('text="Think different. Make different."');
+        //We verify that the heading is visible
+        await expect(heading).toBeVisible();
+        //We verify that the heading contains the correct text
+        await expect(heading).toHaveText('Think different. Make different.');
+    })
     
 })
