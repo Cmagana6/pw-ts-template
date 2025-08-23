@@ -3,12 +3,16 @@ import {test,expect} from '@playwright/test';
 //This is a test suite to refresh the knowledge of selectors
 //Selectors are used to locate elements on the page
 test.describe('Selectors practice', () => {
+    //We will define a beforeEach hook to navigate to the practice page before each test
+    //This will ensure that each test starts from the same state
+    test.beforeEach(async ({ page }) => {
+        await page.goto('https://practice.sdetunicorns.com/');
+    })
     //We are going to start with the CSS selectors
     //CSS selectors are used to select elements based on their CSS properties
     //it can be class, id, tag name, attributes, etc.
     test('CSS Selectors', async ({ page }) => {
-        await page.goto('https://practice.sdetunicorns.com/');
-        //Now we are goint to locate the "Get Started" button using a CSS selector
+        //We are goint to locate the "Get Started" button using a CSS selector
         //We will use the id
         const getStartedButton = await page.locator('#get-started');
         //We verify that the "Get Started" button is visible
@@ -23,7 +27,6 @@ test.describe('Selectors practice', () => {
 
     //Practicing with Text selectors
     test('Verify Heading Text usin Text Selector', async ({ page }) => {
-        await page.goto('https://practice.sdetunicorns.com/');
         //We locate the heading using a text selector
         //Note when using text it must be unique on the page to be accurate
         const heading = await page.locator('text="Think different. Make different."');
@@ -34,7 +37,6 @@ test.describe('Selectors practice', () => {
     })
     
     test('Verify Home Link is enabled using text and CSS Selector', async ({ page }) => {
-        await page.goto('https://practice.sdetunicorns.com/');
         //Find the home button using a combination of text and CSS selector
         // //This is useful when the text is not unique on the page
         // const homeText = await page.locator('#zak-primary-menu >> text=Home');
@@ -42,6 +44,14 @@ test.describe('Selectors practice', () => {
         const homeText = await page.locator('#zak-primary-menu:has-text("Home")');
         //We verify that the home button is enabled
         await expect(homeText).toBeEnabled();
+    })
+
+    test('Verify Search icon is visible using Xpath Selector', async ({ page }) => {
+        //We locate the search icon using an XPath selector
+        const searchIcon = await page.locator('//div[@class="zak-header-actions zak-header-actions--desktop"]//a[@class="zak-header-search__toggle"]');
+
+        //Verify Search icon is visible
+        await expect(searchIcon).toBeVisible();
     })
     
 })
