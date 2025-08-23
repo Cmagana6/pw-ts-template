@@ -33,4 +33,15 @@ test.describe('Selectors practice', () => {
         await expect(heading).toHaveText('Think different. Make different.');
     })
     
+    test('Verify Home Link is enabled using text and CSS Selector', async ({ page }) => {
+        await page.goto('https://practice.sdetunicorns.com/');
+        //Find the home button using a combination of text and CSS selector
+        // //This is useful when the text is not unique on the page
+        // const homeText = await page.locator('#zak-primary-menu >> text=Home');
+        //another way to combine text and CSS selector is using the :has-text() pseudo-class
+        const homeText = await page.locator('#zak-primary-menu:has-text("Home")');
+        //We verify that the home button is enabled
+        await expect(homeText).toBeEnabled();
+    })
+    
 })
