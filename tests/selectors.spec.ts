@@ -54,4 +54,28 @@ test.describe('Selectors practice', () => {
         await expect(searchIcon).toBeVisible();
     })
     
+    test('Handling Multiple Elements', async ({ page }) => {
+        //First we locate the elements we want to address
+        //in this case are the elements from the nav menu
+        //We use locator to get all the li elements that have an id that contains "menu"
+        //instead of $$ which is not recommended in Playwright
+        const navMenuLinks = page.locator('#zak-primary-menu li[id*="menu"]');
+        //we can just compare only a desired element as well using nth()
+        //For example we can verify that the 3rd element contains the text "Shop"
+        const thirdElement = page.locator('#zak-primary-menu li[id*="menu"]').nth(2);
+        //Now we are going to verify the text of each element
+        //We define an array with the expected texts
+        const expectedTexts = ['Home','About','Shop','Blog','Contact','My account'];
+        //We use the allTextContents() method to get the text of all the elements
+        //It automatically returns an array of texts
+        //And we compare it with the expected texts
+        expect(await navMenuLinks.allTextContents()).toEqual(expectedTexts);
+        //now we verify that the third element contains the text "Shop"
+        expect(await thirdElement.textContent()).toEqual(expectedTexts[2]);
+        //Now lets print all the link texts to the console
+        for(const el of await navMenuLinks.elementHandles())
+            //Accessing the textContent property returns a promise so we need to await it
+            console.log(await el.textContent());
+        })
+    
 })
