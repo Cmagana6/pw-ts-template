@@ -77,4 +77,5 @@ test.describe('Selectors practice', () => {
             //Accessing the textContent property returns a promise so we need to await it
             console.log(await el.textContent());
         })
+
 })
